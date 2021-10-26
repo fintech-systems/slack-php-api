@@ -24,7 +24,7 @@ class Slack implements ChatProvider
         $this->log->pushHandler(new StreamHandler(__DIR__ . '/../storage/logs/api.log', Logger::WARNING));
     }
     
-    public function postMessage(String $postFields)
+    public function postMessage(string|array $postFields)
     {       
         $header = [
             "Content-Type: application/json;charset=utf-8",
