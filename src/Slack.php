@@ -27,19 +27,12 @@ class Slack implements ChatProvider
     }
     
     public function postMessage(string|array $postFields) : Response
-    {       
+    {               
         $header = [
-            "Content-Type: application/json;charset=utf-8",
-            "Authorization: Bearer $this->bot_token",
+            'Content-Type'  => 'application/json;charset=utf-8',
+            'Authorization' => "Bearer $this->bot_token",
         ];
-                
-        // $api = new \FintechSystems\LaravelApiHelpers\Api;        
-        // $result= $api->post(
-        //     'https://slack.com/api/chat.postMessage',
-        //     $postFields,
-        //     $header,
-        // );
-
+                        
         $response = Http::withHeaders($header)
             ->post('https://slack.com/api/chat.postMessage', $postFields);
         
