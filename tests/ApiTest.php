@@ -39,15 +39,13 @@ it('can post a message to a Slack Channel that uses an App using the vanilla API
 });
 
 it('can use a Laravel Facade to send a Slack message', function () {
-    $data = [        
+    $payload = [        
         "channel"  => $_ENV['SLACK_CHANNEL'],
         "text"     => "Test 2",
         "username" => "tester",
     ];
 
-    $result = SlackFacade::postMessage(
-        json_encode($data)
-    );
+    $result = SlackFacade::postMessage($payload);
 
     expect(json_decode($result)->ok)->toEqual(true);    
 });
@@ -97,7 +95,7 @@ it('can send a massive block template payload', function () {
                         "text": {
                             "type": "plain_text",
                             "emoji": true,
-                            "text": "Log Ticket",                            
+                            "text": "Log Ticket"                            
                         },
                         "style": "primary",
                         "value": "click_me_123"
@@ -116,9 +114,9 @@ it('can send a massive block template payload', function () {
             }
         ]
       }';
-    
+       
     $result = SlackFacade::postMessage(
-        $data
+        json_decode($data, true)
     );
 
     expect(json_decode($result)->ok)->toEqual(true);        
@@ -186,8 +184,9 @@ it('can display an interactive message on Slack about playing a game', function(
             }
         ]
     }';
+
     $result = SlackFacade::postMessage(
-        $data
+        json_decode($data, true)
     );
     
     expect(json_decode($result)->ok)->toEqual(true);

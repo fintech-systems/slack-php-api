@@ -27,7 +27,8 @@
     },
     "require-dev": {        
         "orchestra/testbench": "^6.20",
-        "pestphp/pest": "^1.20"
+        "pestphp/pest": "^1.20",
+        "guzzlehttp/guzzle": "^7.0"
     },    
     "extra": {
         "laravel": {

@@ -2,6 +2,10 @@
 
 All notable changes to `slack-php-api` will be documented in this file.
 
+## 0.0.5 - 2021-10-26
+
+- fix json inconsistency and redo tests to send arrays
+
 ## 0.0.4 - 2021-10-26
 
 - change header from string to array to be Laravel http() client friendly
