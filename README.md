@@ -1,21 +1,31 @@
-# WHMCS API
-![GitHub release (latest by date)](https://img.shields.io/github/v/release/fintech-systems/packagist-boilerplate) [![Build Status](https://app.travis-ci.com/fintech-systems/packagist-boilerplate.svg?branch=main)](https://app.travis-ci.com/fintech-systems/packagist-boilerplate) ![GitHub](https://img.shields.io/github/license/fintech-systems/packagist-boilerplate)
+# Slack API
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/fintech-systems/slack-php-api) [![Build Status](https://app.travis-ci.com/fintech-systems/packagist-boilerplate.svg?branch=main)](https://app.travis-ci.com/fintech-systems/slack-php-api) ![GitHub](https://img.shields.io/github/license/fintech-systems/slack-php-api)
 
-A WHMCS API designed to run standalone or as part of a Laravel Application
+A Slack API designed to run standalone or as part of a Laravel Application
 
 Requirements:
 
 - PHP 8.0
-- WHMCS
+- A Slack App
 
 # Usage
+
+## References
+
+- https://www.tyntec.com/docs/whatsapp-business-api-integration-slack
+-- Description on setting up the Slack Bot Token
+- https://api.slack.com/methods/chat.postMessage
+-- Description on how to set up the Slack User Token
+- Difference bot and user tokens?
+-- https://api.slack.com/authentication/token-types#user
+--- xoxp = user token, xoxb = bot token
 
 ## Framework Agnostic PHP
 
 ```php
 <?php
 
-use FintechSystems\WhmcsApi\WhmcsApi;
+use FintechSystems\Slack\Slack;
 
 require 'vendor/autoload.php';
 
@@ -23,84 +33,74 @@ $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
 $server = [
-    'url'            => $_ENV['WHMCS_URL'],
-    'api_identifier' => $_ENV['WHMCS_API_IDENTIFIER'],
-    'api_secret'     => $_ENV['WHMCS_API_SECRET'],
+    'bot_token'  => $_ENV['SLACK_BOT_TOKEN'],
+    'user_token' => $_ENV['SLACK_USER_TOKEN'],
+    'channel'    => $_ENV['SLACK_CHANNEL'],
 ];
 
-$api = new WhmcsApi($server);
+$api = new Slack($server);
 
-$result = $api->getClients();
 ```
 
 ## Laravel Installation
 
-Publish the configuration file:
-
-`php artisan vendor:publish`
-
-# Features
-
-Change Package
-
-## Change Package
-
-Framework Agnostic PHP:
-
-```php
-$newServiceId = 5;
-
-$api = new WhmcsApi;
-$api->changePackage($newServiceId);
+You can publish the config file with:
+```bash
+php artisan vendor:publish --provider="FintechSystems\Slack\SlackServiceProvider" --tag="slack-config"
 ```
 
-Laravel App:
-
+This is the contents of the published config file:
 
 ```php
-$newServiceId = 5;
-
-WhmcsApi::changePackage($newServiceId);
+return [
+    'bot_token'  => $_ENV['SLACK_BOT_TOKEN'],
+    'user_token' => $_ENV['SLACK_USER_TOKEN'],
+    'channel'    => $_ENV['SLACK_CHANNEL'],
+];
 ```
 
-Result:
+## Usage
 
-A new package is applied to the service. If the package is linked to an API, the API will be called. 
+### Example
 
-# Testing
+```php
 
-We love testing! Use the command below to run the tests.
+use FintechSystems\LaravelApiHelpers\Api;
 
-`vendor/bin/phpunit --exclude-group=live`
+$api = new Api();
 
-The exclude is so as to avoid Live API calls which may cause tests to fail
+$postData = [
+  'channel'   => 'C02G5QS8ANA',
+  'text'      => '*Joe Smith*/27823096710: how are you',
+  'thread_ts' => '1635100445.007500',
+];
 
-The `storage` folder has examples API responses, also used for caching during tests.
+$result = $api->postMessage($postData);
+```
 
-## Coverage reports
+### Methods
 
-To regenerate coverage reports:
+```php
+public function postMessage(String $postFields)
+public function makeImagePublic($id)
+public function reconstructImageUrl($filesZero)
+```
 
-`XDEBUG_MODE=coverage ./vendor/bin/phpunit --coverage-html=tests/coverage-report`
+## Testing
 
-See also `.travis.yml`
+```bash
+vendor/bin/pest  
+```
 
-We have a badge for Coverage but it's problematic due to Github issues:<br>
-![Codecov branch](https://img.shields.io/codecov/c/github/fintech-systems/whmcs-api/main) 
+### Local Development
 
-## Version Control
-
-This application uses Semantic Versioning as per https://semver.org/
-
-# Local Editing
-
-For local editing, add this to `composer.json`:
+If you are debugging from another package on localhost, then add this to `composer.json`:
 
 ```json
 "repositories" : [
         {
             "type": "path",
-            "url": "../whmcs-api"
+            "url": "../slack-php-api"
         }
     ]
 ```
@@ -108,16 +108,21 @@ For local editing, add this to `composer.json`:
 Then in `require` section:
 
 ```json
-"fintech-systems/virtualmin-api": "dev-main",
+"fintech-systems/slack-php-api": "dev-main",
 ```
+## Changelog
 
-# License
+Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
 
-MIT
+## Contributing
 
-# Author
+Feel free to log an issue or create a pull request.
 
-eugene (at) vander.host <br>
-https://vander.host <br>
-+27 82 309-6710
+## Credits
 
+- [:author_name](https://github.com/:author_username)
+- [All Contributors](../../contributors)
+
+## License
+
+The MIT License (MIT). Please see [License File](LICENSE.md) for more information.

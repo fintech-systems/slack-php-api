@@ -1,13 +1,13 @@
 <?php
 
-namespace FintechSystems\WhmcsApi\Facades;
+namespace FintechSystems\Slack\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
-class WhmcsApi extends Facade
+class Slack extends Facade
 {
     protected static function getFacadeAccessor()
     {
-        return 'whmcs-api';
+        return 'slack';
     }
 }

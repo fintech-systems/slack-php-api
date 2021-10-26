@@ -1,39 +1,41 @@
 {
-    "name": "fintech-systems/whmcs-php-api",
-    "description": "A PHP API designed to ease interfacing with WHMCS",
+    "name": "fintech-systems/slack-php-api",
+    "description": "A PHP API designed to ease interfacing with Slack",
     "type": "library",
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "FintechSystems\\WhmcsApi\\": "src/"
+            "FintechSystems\\Slack\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "FintechSystems\\WhmcsApi\\Tests\\": "tests"
+            "FintechSystems\\Slack\\Tests\\": "tests"
         }
     },
     "authors": [
         {
             "name": "Eugene van der Merwe",
-            "email": "eugenevdm@gmail.com"
+            "email": "eugene@fintechsystems.net"
         }
     ],
     "require": {
         "symfony/dotenv": "^5.3",
-        "spatie/ray": "^1.30"
+        "spatie/ray": "^1.30",
+        "fintech-systems/laravel-api-helpers": "^0.1.2",
+        "monolog/monolog": "^2.3"
     },
-    "require-dev": {
-        "phpunit/phpunit": "^9.5",
-        "orchestra/testbench": "^6.20"
+    "require-dev": {        
+        "orchestra/testbench": "^6.20",
+        "pestphp/pest": "^1.20"
     },    
     "extra": {
         "laravel": {
             "providers": [
-                "FintechSystems\\WhmcsApi\\WhmcsApiServiceProvider"
+                "FintechSystems\\Slack\\SlackServiceProvider"
             ],
             "aliases": {
-                "VirtualminApi": "FintechSystems\\WhmcsApi\\Facades\\WhmcsApi"
+                "Slack": "FintechSystems\\Slack\\Facades\\Slack"
             }
         }
     }
