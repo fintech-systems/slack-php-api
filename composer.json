@@ -1,6 +1,6 @@
 {
     "name": "fintech-systems/slack-php-api",
-    "description": "A PHP API designed to ease interfacing with Slack",
+    "description": "A Laravel friendly PHP API designed to ease interfacing with Slack",
     "type": "library",
     "license": "MIT",
     "autoload": {

@@ -120,7 +120,7 @@ Feel free to log an issue or create a pull request.
 
 ## Credits
 
-- [:author_name](https://github.com/:author_username)
+- [Eugene van der Merwe](https://github.com/eugenevdm)
 - [All Contributors](../../contributors)
 
 ## License
