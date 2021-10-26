@@ -4,7 +4,9 @@ namespace FintechSystems\Slack;
 
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
+use Illuminate\Support\Facades\Http;
 use FintechSystems\Slack\Contracts\ChatProvider;
+use Illuminate\Http\Client\Response;
 
 class Slack implements ChatProvider
 {
@@ -24,28 +26,30 @@ class Slack implements ChatProvider
         $this->log->pushHandler(new StreamHandler(__DIR__ . '/../storage/logs/api.log', Logger::WARNING));
     }
     
-    public function postMessage(string|array $postFields)
+    public function postMessage(string|array $postFields) : Response
     {       
         $header = [
             "Content-Type: application/json;charset=utf-8",
             "Authorization: Bearer $this->bot_token",
         ];
                 
-        $api = new \FintechSystems\LaravelApiHelpers\Api;
+        // $api = new \FintechSystems\LaravelApiHelpers\Api;        
+        // $result= $api->post(
+        //     'https://slack.com/api/chat.postMessage',
+        //     $postFields,
+        //     $header,
+        // );
+
+        $response = Http::withHeaders($header)
+            ->post('https://slack.com/api/chat.postMessage', $postFields);
         
-        $result= $api->post(
-            'https://slack.com/api/chat.postMessage',
-            $postFields,
-            $header,
-        );
-        
-        if (json_decode($result)->ok != true) {
-            $message = "Slack API error: " . $result;
-            ray("Slack API error", json_decode($result));
+        if ($response->json()['ok'] != true) {
+            $message = "Slack API error: " . $response;
+            ray("Slack API error", $response->json());
             $this->log->error($message);
         }
 
-        return $result;
+        return $response;
     }
 
     public function makeImagePublic($id) {
