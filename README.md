@@ -51,11 +51,13 @@ php artisan vendor:publish --provider="FintechSystems\Slack\SlackServiceProvider
 
 This is the contents of the published config file:
 
+This is the contents of the published config file:
+
 ```php
 return [
-    'bot_token'  => $_ENV['SLACK_BOT_TOKEN'],
-    'user_token' => $_ENV['SLACK_USER_TOKEN'],
-    'channel'    => $_ENV['SLACK_CHANNEL'],
+    'bot_token'  => env('SLACK_BOT_TOKEN'),
+    'user_token' => env('SLACK_USER_TOKEN'),
+    'channel'    => env('SLACK_CHANNEL'),
 ];
 ```
 

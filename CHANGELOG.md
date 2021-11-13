@@ -2,6 +2,10 @@
 
 All notable changes to `slack-php-api` will be documented in this file.
 
+## 0.0.6 - 2021-11-13
+
+- replace $_ENV[] in config file with env() due to caching issues on Forge
+
 ## 0.0.5 - 2021-10-26
 
 - fix json inconsistency and redo tests to send arrays
